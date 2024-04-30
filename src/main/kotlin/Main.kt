@@ -1,5 +1,6 @@
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,27 +19,36 @@ import java.io.File
 fun AppListaAlumn(){
 
     var nombreUsuario by remember { mutableStateOf("") }
-    val alumnos = remember { mutableStateListOf(retornarListaAlum()) }
+    val alumnos = remember { mutableStateListOf<String>() }
 
+    for (alumno in retornarListaAlum()){
+        alumnos.add(alumno)
+    }
 
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(5.dp, alignment = Alignment.CenterVertically),
         modifier = Modifier.fillMaxSize()
     ){
-        OutlinedTextField(
-            value = nombreUsuario,
-            onValueChange = { nombreUsuario = it },
-            label = { Text(text = "Usuario") }
-        )
-    }
-    LazyColumn (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(5.dp, alignment = Alignment.CenterVertically),
-        userScrollEnabled = true,
-        modifier = Modifier.fillMaxSize()
-    ){
-        
+        Row (
+            modifier = Modifier.fillMaxSize()
+        ){
+            OutlinedTextField(
+                value = nombreUsuario,
+                onValueChange = { nombreUsuario = it },
+                label = { Text(text = "Usuario") }
+            )
+            LazyColumn (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(5.dp, alignment = Alignment.CenterVertically),
+                userScrollEnabled = true,
+                modifier = Modifier.fillMaxSize()
+            ){
+                items(alumnos){estudiante ->
+                    Text(estudiante)
+                }
+            }
+        }
     }
 }
 
