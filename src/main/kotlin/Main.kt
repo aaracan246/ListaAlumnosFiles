@@ -60,7 +60,6 @@ fun retornarListaAlum(): List<String>{
     if (archivo.exists()){
         val contenido = archivo.readText()
         val listaAlumnosLocal = contenido.split(", ")
-        println("Lista de alumnos:")
         for (alumno in listaAlumnosLocal) { listaAlumnos.add(alumno)}
     }
     else{
