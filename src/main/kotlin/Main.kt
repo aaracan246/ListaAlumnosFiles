@@ -63,17 +63,16 @@ fun AppListaAlumn(
             ) {
                 Text("Clear all")
             }
+            Button(
+                onClick = onSaveChanges,
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                Text("Save changes")
+            }
         }
 
-        Button(
-            onClick = onSaveChanges,
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Text("Save changes")
-        }
     }
 }
-
 
 
 fun retornarListaAlum(): List<String> {
@@ -91,6 +90,17 @@ fun retornarListaAlum(): List<String> {
         println("No se ha podido acceder al fichero ($archivo).")
     }
     return listaAlumnos
+}
+
+
+fun guardarListaAlum(alumnos: List<String>){
+    val listaAl = "listaalumnos.txt"
+    val archivo = File(listaAl)
+
+    if (archivo.exists()){
+        archivo.writeText(alumnos.joinToString(", "))
+    }
+    else{ println("No se ha podido acceder al fichero ($archivo).") }
 }
 
 
@@ -116,7 +126,7 @@ fun main() = application {
                 savedAlumnos = alumnos.toList().toMutableList()
             },
             onSaveChanges = {
-
+                guardarListaAlum(savedAlumnos)
             }
         )
     }
