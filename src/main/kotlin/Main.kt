@@ -1,9 +1,7 @@
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -14,65 +12,112 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import java.io.File
 
-
 @Composable
-fun AppListaAlumn(){
-
+fun AppListaAlumn(
+    alumnos: List<String>,
+    onAddAlumno: (String) -> Unit,
+    onClearAll: () -> Unit,
+    onSaveChanges: () -> Unit
+) {
     var nombreUsuario by remember { mutableStateOf("") }
-    val alumnos = remember { mutableStateListOf<String>() }
 
-    for (alumno in retornarListaAlum()){
-        alumnos.add(alumno)
-    }
-
-    Column (
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(5.dp, alignment = Alignment.CenterVertically),
         modifier = Modifier.fillMaxSize()
-    ){
-        Row (
-            modifier = Modifier.fillMaxSize()
-        ){
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
             OutlinedTextField(
                 value = nombreUsuario,
                 onValueChange = { nombreUsuario = it },
-                label = { Text(text = "Usuario") }
+                label = { Text(text = "Student's name: ") },
+                modifier = Modifier.padding(16.dp)
             )
-            LazyColumn (
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(5.dp, alignment = Alignment.CenterVertically),
-                userScrollEnabled = true,
-                modifier = Modifier.fillMaxSize()
-            ){
-                items(alumnos){estudiante ->
-                    Text(estudiante)
+
+            Button(
+                onClick = { onAddAlumno(nombreUsuario) },
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                Text("Add new student")
+            }
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            LazyColumn(
+                modifier = Modifier.weight(1f)
+            ) {
+                items(alumnos) { alumno ->
+                    Text(alumno, modifier = Modifier.padding(8.dp))
                 }
             }
+
+            Button(
+                onClick = onClearAll,
+                modifier = Modifier.padding(top = 16.dp, bottom = 32.dp)
+            ) {
+                Text("Clear all")
+            }
+        }
+
+        Button(
+            onClick = onSaveChanges,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text("Save changes")
         }
     }
 }
 
-fun retornarListaAlum(): List<String>{
+
+
+fun retornarListaAlum(): List<String> {
     val listaAl = "listaalumnos.txt"
     val archivo = File(listaAl)
     val listaAlumnos: MutableList<String> = mutableListOf()
 
-    if (archivo.exists()){
+    if (archivo.exists()) {
         val contenido = archivo.readText()
         val listaAlumnosLocal = contenido.split(", ")
-        for (alumno in listaAlumnosLocal) { listaAlumnos.add(alumno)}
-    }
-    else{
+        for (alumno in listaAlumnosLocal) {
+            listaAlumnos.add(alumno)
+        }
+    } else {
         println("No se ha podido acceder al fichero ($archivo).")
     }
     return listaAlumnos
 }
 
+
 fun main() = application {
+    val alumnos = mutableListOf<String>()
+
+    for (alumno in retornarListaAlum()) {
+        alumnos.add(alumno)
+    }
+
     Window(onCloseRequest = ::exitApplication) {
-        AppListaAlumn()
+        var savedAlumnos by remember { mutableStateOf(alumnos) }
+
+        AppListaAlumn(
+            alumnos = savedAlumnos,
+            onAddAlumno = { alumno ->
+                val newAlumnos = savedAlumnos.toMutableList()
+                newAlumnos.add(alumno)
+                savedAlumnos = newAlumnos
+            },
+            onClearAll = {
+                alumnos.clear()
+                savedAlumnos = alumnos.toList().toMutableList()
+            },
+            onSaveChanges = {
+
+            }
+        )
     }
 }
-
-
-
