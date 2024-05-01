@@ -77,10 +77,10 @@ fun AppListaAlumn(
                     modifier = Modifier
                         .background(color = Color.Cyan)
                         .border(width = 1.dp, color = Color.Black)
-                        //.verticalScroll(enabled = true, state = ScrollState(0))
-
+                        .weight(1f)
                 ){
                     LazyColumn(
+                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0))
                     ) {
                         items(alumnos) { alumno ->
                             Text(alumno, modifier = Modifier.padding(8.dp))
