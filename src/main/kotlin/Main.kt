@@ -26,6 +26,8 @@ import java.io.File
 import java.io.InputStream
 
 
+/* Abstraer tema de ficheros y cambiar a distintos files */
+
 @Composable
 fun AppListaAlumn(
     alumnos: List<String>,
