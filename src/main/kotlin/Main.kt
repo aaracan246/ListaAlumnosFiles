@@ -15,9 +15,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -50,16 +48,18 @@ fun AppListaAlumn(
             OutlinedTextField(
                 value = nombreUsuario,
                 onValueChange = { nombreUsuario = it },
+                singleLine = true,
                 label = { Text(text = "Student's name: ") },
                 modifier = Modifier
                     .padding(16.dp)
                     .focusRequester(focusRequester)
                     .onKeyEvent { event ->
-                        if (event.key == Key.Enter && nombreUsuario.isNotBlank()){
-                            onAddAlumno(nombreUsuario)
-                            nombreUsuario = ""
-                            focusRequester.requestFocus()
-                            true
+
+                            if (event.key == Key.Enter && event.type == KeyEventType.KeyUp && nombreUsuario.isNotBlank()){
+                                onAddAlumno(nombreUsuario)
+                                nombreUsuario = ""
+                                focusRequester.requestFocus()
+                                true
 
                         }
                         else{ false }
