@@ -86,7 +86,7 @@ fun AppListaAlumn(
                         .weight(1f)
                 ){
                     LazyColumn(
-                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0)).height(300.dp).width(150.dp)
+                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0))
                     ) {
                         items(alumnos) { alumno ->
                             Text(alumno, modifier = Modifier
@@ -110,7 +110,6 @@ fun AppListaAlumn(
                 }
             }
         }
-
     }
 }
 
