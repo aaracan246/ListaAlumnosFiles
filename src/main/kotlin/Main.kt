@@ -71,7 +71,7 @@ fun AppListaAlumn(
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxSize()
             ) {
                 Box(
                     modifier = Modifier
@@ -80,7 +80,7 @@ fun AppListaAlumn(
                         .weight(1f)
                 ){
                     LazyColumn(
-                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0))
+                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0)).height(300.dp).width(150.dp)
                     ) {
                         items(alumnos) { alumno ->
                             Text(alumno, modifier = Modifier.padding(8.dp))
