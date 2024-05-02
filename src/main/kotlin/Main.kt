@@ -26,7 +26,7 @@ import java.io.File
 import java.io.InputStream
 
 
-/* Abstraer tema de ficheros y cambiar a distintos files */
+/* Elevar y hacer funciones */
 
 @Composable
 fun AppListaAlumn(
@@ -110,39 +110,15 @@ fun AppListaAlumn(
 }
 
 
-fun retornarListaAlum(): List<String> {
-    val listaAl = "listaalumnos.txt"
-    val archivo = File(listaAl)
-    val listaAlumnos: MutableList<String> = mutableListOf()
 
-    if (archivo.exists()) {
-        val contenido = archivo.readText()
-        val listaAlumnosLocal = contenido.split(", ")
-        for (alumno in listaAlumnosLocal) {
-            listaAlumnos.add(alumno)
-        }
-    } else {
-        println("No se ha podido acceder al fichero ($archivo).")
-    }
-    return listaAlumnos
-}
-
-
-fun guardarListaAlum(alumnos: List<String>){
-    val listaAl = "listaalumnos.txt"
-    val archivo = File(listaAl)
-
-    if (archivo.exists()){
-        archivo.writeText(alumnos.joinToString(", "))
-    }
-    else{ println("No se ha podido acceder al fichero ($archivo).") }
-}
 
 
 fun main() = application {
+    val gestorFicheros = GestorFicheros()
+
     val alumnos = mutableListOf<String>()
 
-    for (alumno in retornarListaAlum()) {
+    for (alumno in gestorFicheros.retornarListaAlum()) {
         alumnos.add(alumno)
     }
 
@@ -170,7 +146,7 @@ fun main() = application {
                 savedAlumnos = alumnos.toList().toMutableList()
             },
             onSaveChanges = {
-                guardarListaAlum(savedAlumnos)
+                gestorFicheros.guardarListaAlum(savedAlumnos)
             }
         )
     }
