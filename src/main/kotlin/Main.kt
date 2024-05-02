@@ -51,8 +51,10 @@ fun AppListaAlumn(
                 value = nombreUsuario,
                 onValueChange = { nombreUsuario = it },
                 label = { Text(text = "Student's name: ") },
-                modifier = Modifier.padding(16.dp)
-                    .focusRequester(focusRequester).onKeyEvent { event ->
+                modifier = Modifier
+                    .padding(16.dp)
+                    .focusRequester(focusRequester)
+                    .onKeyEvent { event ->
                         if (event.key == Key.Enter && nombreUsuario.isNotBlank()){
                             onAddAlumno(nombreUsuario)
                             nombreUsuario = ""
@@ -66,14 +68,16 @@ fun AppListaAlumn(
 
             Button(
                 onClick = { onAddAlumno(nombreUsuario) },
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
             ) {
                 Text("Add new student")
             }
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
                 Box(
                     modifier = Modifier
@@ -85,7 +89,8 @@ fun AppListaAlumn(
                         //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0)).height(300.dp).width(150.dp)
                     ) {
                         items(alumnos) { alumno ->
-                            Text(alumno, modifier = Modifier.padding(8.dp))
+                            Text(alumno, modifier = Modifier
+                                                    .padding(8.dp))
                         }
                     }
                 }
