@@ -115,12 +115,8 @@ fun AppListaAlumn(
 }
 
 
-
-
-
 fun main() = application {
     val gestorFicheros = GestorFicheros()
-
     val alumnos = mutableListOf<String>()
 
     for (alumno in gestorFicheros.retornarListaAlum()) {

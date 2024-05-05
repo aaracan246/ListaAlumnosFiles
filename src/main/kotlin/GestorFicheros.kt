@@ -2,9 +2,10 @@ import java.io.File
 
 class GestorFicheros: IFiles {
 
+    private val listaAl = "listaalumnos.txt"
+    private val archivo = File(listaAl)
+
     override fun retornarListaAlum(): List<String> {
-        val listaAl = "listaalumnos.txt"
-        val archivo = File(listaAl)
         val listaAlumnos: MutableList<String> = mutableListOf()
 
         if (archivo.exists()) {
@@ -21,8 +22,6 @@ class GestorFicheros: IFiles {
 
 
     override fun guardarListaAlum(alumnos: List<String>){
-        val listaAl = "listaalumnos.txt"
-        val archivo = File(listaAl)
 
         if (archivo.exists()){
             archivo.writeText(alumnos.joinToString(", "))
