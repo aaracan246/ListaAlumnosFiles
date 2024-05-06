@@ -1,6 +1,8 @@
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.focus.FocusRequester
 import java.io.File
 
 class StudentsViewModel(
@@ -11,16 +13,16 @@ class StudentsViewModel(
 ): IStudentsViewModel {
 
     private val nuevoNombreUsuarioPriv = mutableStateOf("")
-    override val nuevoNombreUsuario: State<String> = nuevoNombreUsuarioPriv
+    override var nuevoNombreUsuario: State<String> = nuevoNombreUsuarioPriv
 
     private val alumnosPriv = mutableStateListOf<String>()
     override val alumnos: List<String> = alumnosPriv
 
     private val infoMessagePriv = mutableStateOf("")
-    override val infoMessage: State<String> = infoMessagePriv
+    override var infoMessage: State<String> = infoMessagePriv
 
     private val showInfoMessagePriv = mutableStateOf(false)
-    override val showInfoMessage: State<Boolean> = showInfoMessagePriv
+    override var showInfoMessage: State<Boolean> = showInfoMessagePriv
 
     override fun cargarAlumnos(){
         alumnosPriv.addAll(manejoArchivos.retornarListaAlum(archivoStudents))
