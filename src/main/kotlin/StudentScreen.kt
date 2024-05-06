@@ -80,9 +80,7 @@ fun StudentScreen(
                         .border(width = 1.dp, color = Color.Black)
                         .weight(1f)
                 ){
-                    LazyColumn(
-                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0))
-                    ) {
+                    LazyColumn {
                         items(listaAlumnos) { alumno ->
                             Text(alumno, modifier = Modifier
                                 .padding(8.dp))
