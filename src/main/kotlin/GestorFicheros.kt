@@ -2,30 +2,27 @@ import java.io.File
 
 class GestorFicheros: IFiles {
 
-    private val listaAl = "listaalumnos.txt"
-    private val archivo = File(listaAl)
-
-    override fun retornarListaAlum(): List<String> {
+    override fun retornarListaAlum(file: File): List<String> {
         val listaAlumnos: MutableList<String> = mutableListOf()
 
-        if (archivo.exists()) {
-            val contenido = archivo.readText()
+        if (file.exists()) {
+            val contenido = file.readText()
             val listaAlumnosLocal = contenido.split(", ")
             for (alumno in listaAlumnosLocal) {
                 listaAlumnos.add(alumno)
             }
         } else {
-            println("No se ha podido acceder al fichero ($archivo).")
+            println("No se ha podido acceder al fichero ($file).")
         }
         return listaAlumnos
     }
 
 
-    override fun guardarListaAlum(alumnos: List<String>){
+    override fun guardarListaAlum(file: File, alumnos: List<String>){
 
-        if (archivo.exists()){
-            archivo.writeText(alumnos.joinToString(", "))
+        if (file.exists()){
+            file.writeText(alumnos.joinToString(", "))
         }
-        else{ println("No se ha podido acceder al fichero ($archivo).") }
+        else{ println("No se ha podido acceder al fichero ($file).") }
     }
 }

@@ -5,8 +5,8 @@ import java.io.File
 
 class StudentsViewModel(
 
-    val manejoArchivos: IFiles,
-    val archivoStudents: File
+    private val manejoArchivos: IFiles,
+    private val archivoStudents: File
 
 ): IStudentsViewModel {
 
@@ -22,6 +22,28 @@ class StudentsViewModel(
     private val showInfoMessagePriv = mutableStateOf(false)
     override val showInfoMessage: State<Boolean> = showInfoMessagePriv
 
+    override fun cargarAlumnos(){
+        alumnosPriv.addAll(manejoArchivos.retornarListaAlum(archivoStudents))
+    }
 
+    override fun introducirAlumn(){
+        alumnosPriv.add(nuevoNombreUsuario.value)
+        nuevoNombreUsuarioPriv.value = ""
+    }
 
+    override fun cambiarNomAlumn(alumno: String){
+        nuevoNombreUsuarioPriv.value = alumno
+    }
+
+    override fun borrarAlum(alumno: String) {
+        alumnosPriv.remove(alumno)
+    }
+
+    override fun limpiarLista() {
+        alumnosPriv.clear()
+    }
+
+    override fun guardarLista() {
+        manejoArchivos.guardarListaAlum(archivoStudents, alumnosPriv)
+    }
 }

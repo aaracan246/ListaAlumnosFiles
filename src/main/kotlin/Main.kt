@@ -29,16 +29,18 @@ import java.io.InputStream
 
 @Composable
 fun AppListaAlumn(
+    alumno: String,
     alumnos: List<String>,
+    onAlumnoChange: (String) -> Unit,
     onAddAlumno: (String) -> Unit,
     onClearAll: () -> Unit,
     onSaveChanges: () -> Unit
 ) {
-    var nombreUsuario by remember { mutableStateOf("") }
-    val nameStudentfocusRequester = remember { FocusRequester() }
-
-    var showInfoMessage by remember { mutableStateOf(false)}
-    var infoMessage by remember { mutableStateOf("") }
+//    var nombreUsuario by remember { mutableStateOf("") }
+//    val nameStudentfocusRequester = remember { FocusRequester() }
+//
+//    var showInfoMessage by remember { mutableStateOf(false)}
+//    var infoMessage by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,8 +52,8 @@ fun AppListaAlumn(
         ) {
 
             OutlinedTextField(
-                value = nombreUsuario,
-                onValueChange = { nombreUsuario = it },
+                value = alumno,
+                onValueChange = onAlumnoChange,
                 singleLine = true,
                 label = { Text(text = "Student's name: ") },
                 modifier = Modifier
@@ -158,11 +160,14 @@ fun InfoMessage(message: String, onCloseInfoMessage: () -> Unit){
 
 fun main() = application {
     val gestorFicheros = GestorFicheros()
+    val archivo = "listaalumnos.txt"
+    val file = File(archivo)
+    val viewModel = StudentsViewModel(gestorFicheros, file)
+    val alumno by viewModel.nuevoNombreUsuario
+    var listaAlumnos = viewModel.alumnos
 
-    val alumnos = mutableListOf<String>()
-
-    for (alumno in gestorFicheros.retornarListaAlum()) {
-        alumnos.add(alumno)
+    LaunchedEffect(key1 = true) {
+        viewModel.cargarAlumnos()
     }
 
     val imageFile = File("src/main/resources/Sample1.png")
@@ -175,21 +180,24 @@ fun main() = application {
     ) {
 
 
-        var savedAlumnos by remember { mutableStateOf(alumnos) }
+       // var savedAlumnos by remember { mutableStateOf(alumnos) }
 
         AppListaAlumn(
-            alumnos = savedAlumnos,
-            onAddAlumno = { alumno ->
-                val newAlumnos = savedAlumnos.toMutableList()
-                newAlumnos.add(alumno)
-                savedAlumnos = newAlumnos
+            alumno = alumno,
+
+            alumnos = listaAlumnos,
+
+            onAddAlumno = {
+                viewModel.introducirAlumn()
+            },
+            onAlumnoChange = {
+                viewModel.cambiarNomAlumn(it)
             },
             onClearAll = {
-                alumnos.clear()
-                savedAlumnos = alumnos.toList().toMutableList()
+                viewModel.limpiarLista()
             },
             onSaveChanges = {
-                gestorFicheros.guardarListaAlum(savedAlumnos)
+                viewModel.guardarLista()
             }
         )
     }

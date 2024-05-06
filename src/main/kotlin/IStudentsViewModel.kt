@@ -9,4 +9,11 @@ interface IStudentsViewModel {
     val infoMessage: State<String>
     val showInfoMessage: State<Boolean>
 
+    fun cargarAlumnos()
+    fun introducirAlumn()
+    fun cambiarNomAlumn(alumno: String)
+    fun borrarAlum(alumno: String)
+    fun limpiarLista()
+    fun guardarLista()
+
 }
