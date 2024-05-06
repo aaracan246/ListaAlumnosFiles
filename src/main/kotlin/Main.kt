@@ -59,11 +59,11 @@ fun AppListaAlumn(
                     .focusRequester(nameStudentfocusRequester)
                     .onKeyEvent { event ->
 
-                            if (event.key == Key.Enter && event.type == KeyEventType.KeyUp && nombreUsuario.isNotBlank()){
-                                onAddAlumno(nombreUsuario)
-                                nombreUsuario = ""
-                                nameStudentfocusRequester.requestFocus()
-                                true
+                        if (event.key == Key.Enter && event.type == KeyEventType.KeyUp && nombreUsuario.isNotBlank()){
+                            onAddAlumno(nombreUsuario)
+                            nombreUsuario = ""
+                            nameStudentfocusRequester.requestFocus()
+                            true
 
                         }
                         else{ false }
@@ -94,7 +94,7 @@ fun AppListaAlumn(
                     ) {
                         items(alumnos) { alumno ->
                             Text(alumno, modifier = Modifier
-                                                    .padding(8.dp))
+                                .padding(8.dp))
                         }
                     }
                 }
@@ -194,6 +194,7 @@ fun main() = application {
         )
     }
 }
+
 
 
 
