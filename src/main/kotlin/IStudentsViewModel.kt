@@ -6,5 +6,7 @@ interface IStudentsViewModel {
 
     val nuevoNombreUsuario: State<String>
     val alumnos: List<String>
+    val infoMessage: State<String>
+    val showInfoMessage: State<Boolean>
 
 }

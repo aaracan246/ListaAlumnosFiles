@@ -16,6 +16,11 @@ class StudentsViewModel(
     private val alumnosPriv = mutableStateListOf<String>()
     override val alumnos: List<String> = alumnosPriv
 
+    private val infoMessagePriv = mutableStateOf("")
+    override val infoMessage: State<String> = infoMessagePriv
+
+    private val showInfoMessagePriv = mutableStateOf(false)
+    override val showInfoMessage: State<Boolean> = showInfoMessagePriv
 
 
 

@@ -1,10 +1,8 @@
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -17,9 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import kotlinx.coroutines.delay
 import java.io.File
 import java.io.InputStream
 
@@ -34,7 +35,10 @@ fun AppListaAlumn(
     onSaveChanges: () -> Unit
 ) {
     var nombreUsuario by remember { mutableStateOf("") }
-    val focusRequester = remember { FocusRequester() }
+    val nameStudentfocusRequester = remember { FocusRequester() }
+
+    var showInfoMessage by remember { mutableStateOf(false)}
+    var infoMessage by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -52,14 +56,14 @@ fun AppListaAlumn(
                 label = { Text(text = "Student's name: ") },
                 modifier = Modifier
                     .padding(16.dp)
-                    .focusRequester(focusRequester)
+                    .focusRequester(nameStudentfocusRequester)
                     .onKeyEvent { event ->
 
-                            if (event.key == Key.Enter && event.type == KeyEventType.KeyUp && nombreUsuario.isNotBlank()){
-                                onAddAlumno(nombreUsuario)
-                                nombreUsuario = ""
-                                focusRequester.requestFocus()
-                                true
+                        if (event.key == Key.Enter && event.type == KeyEventType.KeyUp && nombreUsuario.isNotBlank()){
+                            onAddAlumno(nombreUsuario)
+                            nombreUsuario = ""
+                            nameStudentfocusRequester.requestFocus()
+                            true
 
                         }
                         else{ false }
@@ -86,11 +90,11 @@ fun AppListaAlumn(
                         .weight(1f)
                 ){
                     LazyColumn(
-                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0)).height(300.dp).width(150.dp)
+                        //modifier = Modifier.verticalScroll(enabled = true, state = ScrollState(0))
                     ) {
                         items(alumnos) { alumno ->
                             Text(alumno, modifier = Modifier
-                                                    .padding(8.dp))
+                                .padding(8.dp))
                         }
                     }
                 }
@@ -103,20 +107,58 @@ fun AppListaAlumn(
                 }
 
                 Button(
-                    onClick = onSaveChanges,
+                    onClick =  {
+                        onSaveChanges()
+                        infoMessage = "¡¡Fichero guardado con éxito!!"
+                        showInfoMessage = true
+                    },
                     modifier = Modifier.padding(bottom = 16.dp)
                 ) {
                     Text("Save changes")
                 }
             }
         }
-
+    }
+    if (showInfoMessage) {
+        InfoMessage(
+            message = infoMessage,
+            onCloseInfoMessage = {
+                showInfoMessage = false
+                infoMessage = ""
+                nameStudentfocusRequester.requestFocus()
+            }
+        )
+    }
+    LaunchedEffect(showInfoMessage) {
+        if (showInfoMessage) {
+            delay(2000)
+            showInfoMessage = false
+            infoMessage = ""
+            nameStudentfocusRequester.requestFocus()
+        }
     }
 }
 
+@Composable
+fun InfoMessage(message: String, onCloseInfoMessage: () -> Unit){
+    DialogWindow(
+        icon = painterResource("Sample1.png"),
+        title = "Atención!!",
+        resizable = false,
+        onCloseRequest = onCloseInfoMessage
+    ){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ){
+            Text(message)
+        }
+    }
+}
 
 fun main() = application {
     val gestorFicheros = GestorFicheros()
+
     val alumnos = mutableListOf<String>()
 
     for (alumno in gestorFicheros.retornarListaAlum()) {
@@ -152,6 +194,7 @@ fun main() = application {
         )
     }
 }
+
 
 
 
