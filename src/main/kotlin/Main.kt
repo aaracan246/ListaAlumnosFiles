@@ -15,7 +15,7 @@ fun main() = application {
     val gestorFicheros = GestorFicheros()
     val archivo = "listaalumnos.txt"
     val file = File(archivo)
-    val viewModel = StudentsViewModel(gestorFicheros, file)
+    val viewModel = StudentsViewModelFile(gestorFicheros, file)
 
     viewModel.cargarAlumnos()
 

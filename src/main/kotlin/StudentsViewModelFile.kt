@@ -1,11 +1,9 @@
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.focus.FocusRequester
 import java.io.File
 
-class StudentsViewModel(
+class StudentsViewModelFile(
 
     private val manejoArchivos: IFiles,
     private val archivoStudents: File
