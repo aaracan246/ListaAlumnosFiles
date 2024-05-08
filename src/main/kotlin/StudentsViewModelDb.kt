@@ -21,7 +21,12 @@ class StudentsViewModelDb(private val studentRepository: StudentRepository): ISt
     override fun cargarAlumnos() {
         val result = studentRepository.getAllStudents()
 
-        // when
+        result.onSuccess {
+
+        }.onFailure {  }
+
+
+
     }
 
     override fun introducirAlumn() {
