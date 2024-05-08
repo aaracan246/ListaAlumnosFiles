@@ -2,6 +2,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 
+
+
 class StudentsViewModelDb(private val studentRepository: StudentRepository): IStudentsViewModel {
 
     private val nuevoNombreUsuarioPriv = mutableStateOf("")
@@ -17,23 +19,29 @@ class StudentsViewModelDb(private val studentRepository: StudentRepository): ISt
     override var showInfoMessage: State<Boolean> = showInfoMessagePriv
 
     override fun cargarAlumnos() {
-        TODO("Not yet implemented")
+        val result = studentRepository.getAllStudents()
+
+        // when
     }
 
     override fun introducirAlumn() {
-        TODO("Not yet implemented")
+        val newAlumno = nuevoNombreUsuario.value
+        if (newAlumno.isNotBlank()){
+            alumnosPriv.add(newAlumno)
+            nuevoNombreUsuarioPriv.value = ""
+        }
     }
 
     override fun cambiarNomAlumn(alumno: String) {
-        TODO("Not yet implemented")
+        nuevoNombreUsuarioPriv.value = alumno
     }
 
     override fun borrarAlum(alumno: String) {
-        TODO("Not yet implemented")
+        alumnosPriv.remove(alumno)
     }
 
     override fun limpiarLista() {
-        TODO("Not yet implemented")
+        alumnosPriv.clear()
     }
 
     override fun guardarLista() {
