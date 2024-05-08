@@ -12,10 +12,16 @@ import java.io.InputStream
 /* Elevar y hacer funciones */
 
 fun main() = application {
+
+    // Ficheros:
     val gestorFicheros = GestorFicheros()
     val archivo = "listaalumnos.txt"
     val file = File(archivo)
     val viewModel = StudentsViewModelFile(gestorFicheros, file)
+
+    // Base de datos:
+    val studentRepository = StudentRepository()
+    val dbViewModel = StudentsViewModelDb(studentRepository)
 
     viewModel.cargarAlumnos()
 
