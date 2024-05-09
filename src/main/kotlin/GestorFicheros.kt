@@ -1,3 +1,4 @@
+import interfaces.IFiles
 import java.io.File
 
 class GestorFicheros: IFiles {

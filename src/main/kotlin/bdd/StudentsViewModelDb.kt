@@ -1,7 +1,9 @@
+package bdd
+
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-
+import interfaces.IStudentsViewModel
 
 
 class StudentsViewModelDb(private val studentRepository: StudentRepository): IStudentsViewModel {
@@ -22,11 +24,10 @@ class StudentsViewModelDb(private val studentRepository: StudentRepository): ISt
         val result = studentRepository.getAllStudents()
 
         result.onSuccess {
-
-        }.onFailure {  }
-
-
-
+            alumnosPriv.add(nuevoNombreUsuario.value)
+        }.onFailure {
+            throw Exception("Ha ocurrido un error inesperado al cargar los alumnos.")
+        }
     }
 
     override fun introducirAlumn() {
@@ -50,7 +51,6 @@ class StudentsViewModelDb(private val studentRepository: StudentRepository): ISt
     }
 
     override fun guardarLista() {
-        TODO("Not yet implemented")
+        studentRepository.updateStudents(alumnosPriv)
     }
-
 }

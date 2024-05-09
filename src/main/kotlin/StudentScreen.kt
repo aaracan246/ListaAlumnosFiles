@@ -19,6 +19,7 @@ import androidx.compose.ui.input.key.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogWindow
+import interfaces.IStudentsViewModel
 import kotlinx.coroutines.delay
 
 @Composable
@@ -31,6 +32,8 @@ fun StudentScreen(
     val listaAlumnos = viewModel.alumnos
     var infoMessage = viewModel.infoMessage.value
     var showInfoMessage = viewModel.showInfoMessage.value
+
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

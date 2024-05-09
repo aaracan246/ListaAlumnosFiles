@@ -1,3 +1,5 @@
+package bdd
+
 import java.sql.Connection
 import java.sql.Statement
 
@@ -52,6 +54,4 @@ class StudentRepository {
             connectionDb?.close()
         }
     }
-
-
 }

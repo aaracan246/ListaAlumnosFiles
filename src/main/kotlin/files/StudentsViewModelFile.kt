@@ -1,6 +1,10 @@
+package files
+
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import interfaces.IFiles
+import interfaces.IStudentsViewModel
 import java.io.File
 
 class StudentsViewModelFile(

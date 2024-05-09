@@ -5,6 +5,10 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import bdd.StudentRepository
+import bdd.StudentsViewModelDb
+import enumClass.TipoBDD
+import files.StudentsViewModelFile
 import java.io.File
 import java.io.InputStream
 
@@ -17,11 +21,11 @@ fun main() = application {
     val gestorFicheros = GestorFicheros()
     val archivo = "listaalumnos.txt"
     val file = File(archivo)
-    val viewModel = StudentsViewModelFile(gestorFicheros, file)
+    //val viewModel = StudentsViewModelFile(gestorFicheros, file)
 
     // Base de datos:
     val studentRepository = StudentRepository()
-    val dbViewModel = StudentsViewModelDb(studentRepository)
+    val viewModel = StudentsViewModelDb(studentRepository)
 
     viewModel.cargarAlumnos()
 
@@ -45,8 +49,13 @@ fun main() = application {
     }
 }
 
+fun chooseRepository(tipoBDD: TipoBDD, viewModel: StudentsViewModelFile, dbViewModel: StudentsViewModelDb) {
+    when(tipoBDD){
+        TipoBDD.BDD -> dbViewModel.cargarAlumnos()
 
-
+        TipoBDD.FILE -> viewModel.cargarAlumnos()
+    }
+}
 
 /*@Composable
 	fun Toast(message: String, onDismiss: () -> Unit) {
