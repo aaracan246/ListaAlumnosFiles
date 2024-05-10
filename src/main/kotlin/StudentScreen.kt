@@ -28,7 +28,7 @@ fun StudentScreen(
 ) {
     val nameStudentfocusRequester = remember { FocusRequester() }
 
-    val alumno by viewModel.nuevoNombreUsuario
+    val alumno = viewModel.nuevoNombreUsuario.value
     val listaAlumnos = viewModel.alumnos
     var infoMessage = viewModel.infoMessage.value
     var showInfoMessage = viewModel.showInfoMessage.value

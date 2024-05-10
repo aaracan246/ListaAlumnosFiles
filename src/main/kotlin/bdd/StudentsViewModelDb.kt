@@ -24,7 +24,7 @@ class StudentsViewModelDb(private val studentRepository: StudentRepository): ISt
         val result = studentRepository.getAllStudents()
 
         result.onSuccess {
-            alumnosPriv.add(nuevoNombreUsuario.value)
+            alumnosPriv.addAll(it)
         }.onFailure {
             throw Exception("Ha ocurrido un error inesperado al cargar los alumnos.")
         }
